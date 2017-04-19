@@ -4,6 +4,7 @@ using Library.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,7 @@ namespace Library.API
             services.AddMvc(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
+                setupAction.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
             });
 
             // register the DbContext on the container, getting the connection string from
