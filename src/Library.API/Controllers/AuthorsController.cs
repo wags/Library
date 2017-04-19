@@ -1,4 +1,7 @@
-﻿using Library.API.Services;
+﻿using System.Collections.Generic;
+using Library.API.Helpers;
+using Library.API.Models;
+using Library.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
@@ -17,7 +20,21 @@ namespace Library.API.Controllers
         public IActionResult GetAuthors()
         {
             var authorsFromRepo = _libraryRepository.GetAuthors();
-            return new JsonResult(authorsFromRepo);
+
+            var authors = new List<AuthorDto>();
+
+            foreach (var author in authorsFromRepo)
+            {
+                authors.Add(new AuthorDto()
+                {
+                    Id = author.Id,
+                    Name = $"{author.FirstName} {author.LastName}",
+                    Genre = author.Genre,
+                    Age = author.DateOfBirth.GetCurrentAge()
+                });
+            }
+
+            return new JsonResult(authors);
         }
     }
 }
