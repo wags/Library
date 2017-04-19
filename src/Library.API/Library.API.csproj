@@ -29,10 +29,4 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="U2.Data.Client">
-      <HintPath>..\..\..\..\Program Files (x86)\Rocket Software\U2 Toolkit for .NET\U2 Database Provider\bin\.NETFramework\v4.5\U2.Data.Client.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
