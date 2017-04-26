@@ -4,11 +4,11 @@ namespace Library.API.Models
 {
     public class BookForCreationDto
     {
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "You should include a title.")]
+        [MaxLength(100, ErrorMessage = "The title may not contain more than 100 characters.")]
         public string Title { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(500, ErrorMessage = "The description may not have more than 500 characters.")]
         public string Description { get; set; }
     }
 }
