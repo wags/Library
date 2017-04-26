@@ -9,6 +9,6 @@ namespace Library.API.Models
         public string Title { get; set; }
 
         [MaxLength(500, ErrorMessage = "The description may not have more than 500 characters.")]
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
     }
 }
