@@ -36,6 +36,16 @@ namespace Library.API.Controllers
                 CreateAuthorsResourceUri(authorsResourceParameters,
                 ResourceUriType.NextPage) : null;
 
+            var paginationMetadata = new
+            {
+                totalCount = authorsFromRepo.TotalCount,
+                pageSize = authorsFromRepo.PageSize,
+                currentPage = authorsFromRepo.CurrentPage,
+                totalPages = authorsFromRepo.TotalPages,
+                previousPageLink = previousPageLink,
+                nextPageLink = nextPageLink
+            };
+
             var authors = Mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo);
 
             return Ok(authors);
