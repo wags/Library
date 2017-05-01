@@ -14,14 +14,19 @@ namespace Library.API.Controllers
     {
         private ILibraryRepository _libraryRepository;
 
+        const int maxAuthorPageSize = 20;
+
         public AuthorsController(ILibraryRepository libraryRepository)
         {
             _libraryRepository = libraryRepository;
         }
 
         [HttpGet()]
-        public IActionResult GetAuthors()
+        public IActionResult GetAuthors([FromQuery] int pageNumber = 1, 
+            [FromQuery] int pageSize = 10)
         {
+            pageSize = (pageSize > maxAuthorPageSize) ? maxAuthorPageSize : pageSize;
+
             var authorsFromRepo = _libraryRepository.GetAuthors();
 
             var authors = Mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo);
