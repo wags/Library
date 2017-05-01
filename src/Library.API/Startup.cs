@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace Library.API
 {
@@ -27,6 +28,8 @@ namespace Library.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+
+            env.ConfigureNLog("nlog.config");
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -48,6 +51,10 @@ namespace Library.API
 
             // register the repository
             services.AddScoped<ILibraryRepository, LibraryRepository>();
+
+            // Needed for NLog.Web
+            // Call this in case you need aspnet-user-authtype/aspnet-user-identity
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +67,8 @@ namespace Library.API
 
             // loggerFactory.AddProvider(new NLog.Extensions.Logging.NLogLoggerProvider());
             loggerFactory.AddNLog();
+
+            app.AddNLogWeb();
 
             if (env.IsDevelopment())
             {
