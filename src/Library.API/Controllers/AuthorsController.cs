@@ -14,10 +14,13 @@ namespace Library.API.Controllers
     public class AuthorsController : Controller
     {
         private ILibraryRepository _libraryRepository;
+        private IUrlHelper _urlHelper;
 
-        public AuthorsController(ILibraryRepository libraryRepository)
+        public AuthorsController(ILibraryRepository libraryRepository,
+            IUrlHelper urlHelper)
         {
             _libraryRepository = libraryRepository;
+            _urlHelper = urlHelper;
         }
 
         [HttpGet()]
