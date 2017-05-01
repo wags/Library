@@ -46,6 +46,9 @@ namespace Library.API.Controllers
                 nextPageLink = nextPageLink
             };
 
+            Response.Headers.Add("X-Pagination",
+                Newtonsoft.Json.JsonConvert.SerializeObject(paginationMetadata));
+
             var authors = Mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo);
 
             return Ok(authors);
