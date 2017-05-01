@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Library.API.Entities;
+using Library.API.Helpers;
 using Library.API.Models;
 using Library.API.Services;
 using Microsoft.AspNetCore.Http;
@@ -14,20 +15,15 @@ namespace Library.API.Controllers
     {
         private ILibraryRepository _libraryRepository;
 
-        const int maxAuthorPageSize = 20;
-
         public AuthorsController(ILibraryRepository libraryRepository)
         {
             _libraryRepository = libraryRepository;
         }
 
         [HttpGet()]
-        public IActionResult GetAuthors([FromQuery] int pageNumber = 1, 
-            [FromQuery] int pageSize = 10)
+        public IActionResult GetAuthors(AuthorsResourceParameters authorsResourceParameters)
         {
-            pageSize = (pageSize > maxAuthorPageSize) ? maxAuthorPageSize : pageSize;
-
-            var authorsFromRepo = _libraryRepository.GetAuthors();
+            var authorsFromRepo = _libraryRepository.GetAuthors(authorsResourceParameters);
 
             var authors = Mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo);
 
