@@ -12,9 +12,9 @@ namespace Library.API.Services
             new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
                 { "Id", new PropertyMappingValue(new List<string>() { "Id" }) },
-                { "Genre",new PropertyMappingValue(new List<string>() { "Genre" }) },
+                { "Genre", new PropertyMappingValue(new List<string>() { "Genre" }) },
                 { "Age", new PropertyMappingValue(new List<string>() { "DateOfBirth" }, true) },
-                { "Name", new PropertyMappingValue(new List<string>() { "FirstName", "LastName"}) }
+                { "Name", new PropertyMappingValue(new List<string>() { "FirstName", "LastName" }) }
             };
 
         private IList<IPropertyMapping> propertyMappings = new List<IPropertyMapping>();
