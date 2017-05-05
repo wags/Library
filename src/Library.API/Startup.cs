@@ -66,6 +66,8 @@ namespace Library.API
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
 
+            services.AddTransient<ITypeHelperService, TypeHelperService>();
+
             // Needed for NLog.Web
             // Call this in case you need aspnet-user-authtype/aspnet-user-identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
