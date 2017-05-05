@@ -16,14 +16,17 @@ namespace Library.API.Controllers
         private ILibraryRepository _libraryRepository;
         private IUrlHelper _urlHelper;
         private IPropertyMappingService _propertyMappingService;
+        private ITypeHelperService _typeHelperService;
 
         public AuthorsController(ILibraryRepository libraryRepository,
             IUrlHelper urlHelper,
-            IPropertyMappingService propertyMappingService)
+            IPropertyMappingService propertyMappingService,
+            ITypeHelperService typeHelperService)
         {
             _libraryRepository = libraryRepository;
             _urlHelper = urlHelper;
             _propertyMappingService = propertyMappingService;
+            _typeHelperService = typeHelperService;
         }
 
         [HttpGet(Name = "GetAuthors")]
