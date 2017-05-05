@@ -38,6 +38,12 @@ namespace Library.API.Controllers
                 return BadRequest();
             }
 
+            if (!_typeHelperService.TypeHasProperties<AuthorDto>
+                (authorsResourceParameters.Fields))
+            {
+                return BadRequest();
+            }
+
             var authorsFromRepo = _libraryRepository.GetAuthors(authorsResourceParameters);
 
             var previousPageLink = authorsFromRepo.HasPrevious ?
