@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Library.API.Entities;
 using Library.API.Helpers;
@@ -39,6 +40,12 @@ namespace Library.API.Controllers
 
             var booksForAuthor = Mapper.Map<IEnumerable<BookDto>>(booksForAuthorFromRepo);
 
+            booksForAuthor = booksForAuthor.Select(book =>
+            {
+                book = CreateLinksForBook(book);
+                return book;
+            });
+
             return Ok(booksForAuthor);
         }
 
@@ -58,7 +65,7 @@ namespace Library.API.Controllers
 
             var bookForAuthor = Mapper.Map<BookDto>(bookForAuthorFromRepo);
 
-            return Ok(bookForAuthor);
+            return Ok(CreateLinksForBook(bookForAuthor));
         }
 
         [HttpPost]
@@ -100,7 +107,7 @@ namespace Library.API.Controllers
 
             return CreatedAtRoute("GetBookForAuthor",
                 new { authorId = authorId, id = bookToReturn.Id },
-                bookToReturn);
+                CreateLinksForBook(bookToReturn));
         }
 
         [HttpDelete("{id}", Name = "DeleteBookForAuthor")]
