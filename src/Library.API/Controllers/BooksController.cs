@@ -28,7 +28,7 @@ namespace Library.API.Controllers
             _urlHelper = urlHelper;
         }
 
-        [HttpGet()]
+        [HttpGet(Name = "GetBooksForAuthor")]
         public IActionResult GetBooksForAuthor(Guid authorId)
         {
             if (!_libraryRepository.AuthorExists(authorId))
@@ -46,7 +46,9 @@ namespace Library.API.Controllers
                 return book;
             });
 
-            return Ok(booksForAuthor);
+            var wrapper = new LinkedCollectionResourceWrapperDto<BookDto>(booksForAuthor);
+
+            return Ok(CreateLinksForBooks(wrapper));
         }
 
         [HttpGet("{id}", Name = "GetBookForAuthor")]
@@ -303,6 +305,18 @@ namespace Library.API.Controllers
                 "PATCH"));
 
             return book;
+        }
+
+        private LinkedCollectionResourceWrapperDto<BookDto> CreateLinksForBooks(
+            LinkedCollectionResourceWrapperDto<BookDto> booksWrapper)
+        {
+            // link to self
+            booksWrapper.Links.Add(
+                new LinkDto(_urlHelper.Link("GetBooksForAuthor", new { }),
+                "self",
+                "GET"));
+
+            return booksWrapper;
         }
     }
 }
