@@ -16,12 +16,15 @@ namespace Library.API.Controllers
     {
         private ILibraryRepository _libraryRepository;
         private ILogger<BooksController> _logger;
+        private IUrlHelper _urlHelper;
 
         public BooksController(ILibraryRepository libraryRepository,
-            ILogger<BooksController> logger)
+            ILogger<BooksController> logger,
+            IUrlHelper urlHelper)
         {
             _logger = logger;
             _libraryRepository = libraryRepository;
+            _urlHelper = urlHelper;
         }
 
         [HttpGet()]
