@@ -269,5 +269,33 @@ namespace Library.API.Controllers
 
             return NoContent();
         }
+
+        private BookDto CreateLinksForBook(BookDto book)
+        {
+            book.Links.Add(new LinkDto(_urlHelper.Link("GetBookForAuthor",
+                new { id = book.Id }),
+                "self",
+                "GET"));
+
+            book.Links.Add(
+                new LinkDto(_urlHelper.Link("DeleteBookForAuthor",
+                new { id = book.Id }),
+                "delete_book",
+                "DELETE"));
+
+            book.Links.Add(
+                new LinkDto(_urlHelper.Link("UpdateBookForAuthor",
+                new { id = book.Id }),
+                "update_book",
+                "PUT"));
+
+            book.Links.Add(
+                new LinkDto(_urlHelper.Link("PartiallyUpdateBookForAuthor",
+                new { id = book.Id }),
+                "partially_update_book",
+                "PATCH"));
+
+            return book;
+        }
     }
 }
