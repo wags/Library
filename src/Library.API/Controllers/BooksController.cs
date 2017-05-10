@@ -70,7 +70,7 @@ namespace Library.API.Controllers
             return Ok(CreateLinksForBook(bookForAuthor));
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateBookForAuthor")]
         public IActionResult CreateBookForAuthor(Guid authorId, [FromBody] BookForCreationDto book)
         {
             if (book == null)
