@@ -132,7 +132,14 @@ namespace Library.API.Controllers
 
             var author = Mapper.Map<AuthorDto>(authorFromRepo);
 
-            return Ok(author.ShapeData(fields));
+            var links = CreateLinksForAuthor(id, fields);
+
+            var linkedResourceToReturn = author.ShapeData(fields)
+                as IDictionary<string, object>;
+
+            linkedResourceToReturn.Add("links", links);
+
+            return Ok(linkedResourceToReturn);
         }
 
         [HttpPost]
