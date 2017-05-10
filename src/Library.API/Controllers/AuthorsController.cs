@@ -189,5 +189,42 @@ namespace Library.API.Controllers
 
             return NoContent();
         }
+
+        private IEnumerable<LinkDto> CreateLinksForAuthor(Guid id, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(
+                    new LinkDto(_urlHelper.Link("GetAuthor", new { id = id }),
+                    "self",
+                    "GET"));
+            }
+            else
+            {
+                links.Add(
+                    new LinkDto(_urlHelper.Link("GetAuthor", new { id = id, fields = fields }),
+                    "self",
+                    "GET"));
+            }
+
+            links.Add(
+                new LinkDto(_urlHelper.Link("DeleteAuthor", new { id = id }),
+                "delete_author",
+                "DELETE"));
+
+            links.Add(
+                new LinkDto(_urlHelper.Link("CreateBookForAuthor", new { authorId = id }),
+                "create_book_for_author",
+                "POST"));
+
+            links.Add(
+                new LinkDto(_urlHelper.Link("GetBooksForAuthor", new { authorId = id }),
+                "books",
+                "GET"));
+
+            return links;
+        }
     }
 }
