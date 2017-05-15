@@ -47,7 +47,7 @@ namespace Library.API.Controllers
             }
 
             var authorsFromRepo = _libraryRepository.GetAuthors(authorsResourceParameters);
-            
+
             var authors = Mapper.Map<IEnumerable<AuthorDto>>(authorsFromRepo);
 
             if (mediaType == "application/vnd.marvin.hateoas+json")
@@ -183,7 +183,7 @@ namespace Library.API.Controllers
             return Ok(linkedResourceToReturn);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateAuthor")]
         public IActionResult CreateAuthor([FromBody] AuthorForCreationDto author)
         {
             if (author == null)
