@@ -185,7 +185,7 @@ namespace Library.API.Controllers
 
         [HttpPost(Name = "CreateAuthor")]
         [RequestHeaderMatchesMediaType("Content-Type",
-            new [] { "application/vnd.marvin.author.full+json" })]
+            new[] { "application/vnd.marvin.author.full+json" })]
         public IActionResult CreateAuthor([FromBody] AuthorForCreationDto author)
         {
             if (author == null)
