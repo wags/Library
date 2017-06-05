@@ -104,7 +104,17 @@ namespace Library.API
             // Call this in case you need aspnet-user-authtype/aspnet-user-identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddHttpCacheHeaders();
+            services.AddHttpCacheHeaders(
+                (expirationModelOptions)
+                =>
+                {
+                    expirationModelOptions.MaxAge = 600;
+                },
+                (validationModelOptions)
+                =>
+                {
+                    validationModelOptions.AddMustRevalidate = true;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
