@@ -104,6 +104,8 @@ namespace Library.API
             // Call this in case you need aspnet-user-authtype/aspnet-user-identity
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddResponseCaching();
+
             services.AddHttpCacheHeaders(
                 (expirationModelOptions)
                 =>
