@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AspNetCoreRateLimit;
 using Library.API.Entities;
 using Library.API.Helpers;
 using Library.API.Services;
@@ -51,7 +53,7 @@ namespace Library.API
                 new XmlDataContractSerializerInputFormatter();
                 xmlDataContractSerializerInputFormatter.SupportedMediaTypes
                     .Add("application/vnd.marvin.authorwithdateofdeath.full+xml");
-                setupAction.InputFormatters.Add(xmlDataContractSerializerInputFormatter);                    
+                setupAction.InputFormatters.Add(xmlDataContractSerializerInputFormatter);
 
                 var jsonInputFormatter = setupAction.InputFormatters
                 .OfType<JsonInputFormatter>().FirstOrDefault();
@@ -117,6 +119,24 @@ namespace Library.API
                 {
                     validationModelOptions.AddMustRevalidate = true;
                 });
+
+            services.AddMemoryCache();
+
+            services.Configure<IpRateLimitOptions>((options) =>
+            {
+                options.GeneralRules = new List<RateLimitRule>()
+                {
+                    new RateLimitRule()
+                    {
+                        Endpoint = "*",
+                        Limit = 3,
+                        Period = "5m"
+                    }
+                };
+            });
+
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -179,6 +199,8 @@ namespace Library.API
             });
 
             libraryContext.EnsureSeedDataForContext();
+
+            app.UseIpRateLimiting();
 
             app.UseResponseCaching();
 
