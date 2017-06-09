@@ -129,8 +129,14 @@ namespace Library.API
                     new RateLimitRule()
                     {
                         Endpoint = "*",
-                        Limit = 3,
+                        Limit = 10,
                         Period = "5m"
+                    },
+                    new RateLimitRule()
+                    {
+                        Endpoint = "*",
+                        Limit = 2,
+                        Period = "10s"
                     }
                 };
             });
